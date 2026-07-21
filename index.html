@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ANWELL by BYT — Bản mẫu MVP</title>
+<meta name="description" content="Ba bản mẫu tương tác của nền tảng chăm sóc sức khoẻ ANWELL: ứng dụng người dùng, cổng đăng ký đối tác, và công cụ quản trị.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Be+Vietnam+Pro:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --forest:#0C3F36; --pine:#12564A; --jade:#2E8567; --gold:#B9893B;
+  --paper:#F5F8F5; --ink:#0A2A24; --ink-soft:#3C5B53;
+  --mist:rgba(238,245,240,.60); --line:rgba(185,137,59,.34);
+  --display:'Cormorant Garamond',Georgia,serif;
+  --body:'Be Vietnam Pro',system-ui,-apple-system,'Segoe UI',sans-serif;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0; min-height:100vh; font-family:var(--body); color:#EAF2ED;
+  background:
+    radial-gradient(120% 90% at 50% -18%, rgba(46,133,103,.34) 0%, transparent 62%),
+    radial-gradient(80% 60% at 88% 108%, rgba(185,137,59,.13) 0%, transparent 60%),
+    var(--forest);
+  background-attachment:fixed;
+  display:flex; flex-direction:column; align-items:center;
+  padding:clamp(2rem,6vw,4.5rem) clamp(1.1rem,4vw,2rem) 3rem;
+}
+.wrap{width:100%; max-width:1120px}
+
+/* ── dấu hiệu: hoa sen năm cánh ── */
+.mark{display:block; margin:0 auto clamp(1.1rem,3vw,1.8rem); width:clamp(58px,9vw,80px); height:auto}
+.mark path{fill:none; stroke:var(--gold); stroke-width:2.4; stroke-linejoin:round;
+  stroke-dasharray:180; stroke-dashoffset:180; animation:draw 1.5s cubic-bezier(.32,.72,.3,1) forwards}
+.mark circle{fill:var(--gold); opacity:0; animation:dot .7s ease .95s forwards}
+.mark path:nth-of-type(1){animation-delay:.05s}
+.mark path:nth-of-type(2){animation-delay:.18s}
+.mark path:nth-of-type(3){animation-delay:.31s}
+.mark path:nth-of-type(4){animation-delay:.44s}
+.mark path:nth-of-type(5){animation-delay:.57s}
+@keyframes draw{to{stroke-dashoffset:0}}
+@keyframes dot{to{opacity:1}}
+
+header{text-align:center; margin-bottom:clamp(2.4rem,6vw,4rem)}
+.kicker{font-size:.66rem; letter-spacing:.34em; text-transform:uppercase;
+  color:var(--gold); font-weight:500; margin:0 0 1rem}
+h1{font-family:var(--display); font-weight:600; margin:0;
+  font-size:clamp(2.5rem,8vw,4.3rem); line-height:1.02; letter-spacing:.015em}
+h1 em{font-style:normal; color:var(--gold)}
+.tagline{font-family:var(--display); font-style:italic; font-size:clamp(1.05rem,2.6vw,1.4rem);
+  color:var(--mist); margin:.7rem 0 0; letter-spacing:.01em}
+.intro{max-width:47ch; margin:1.5rem auto 0; font-size:.95rem; line-height:1.72;
+  color:var(--mist); font-weight:300}
+
+/* ── ba cửa vào ── */
+.doors{position:relative; display:grid; gap:clamp(1rem,2.4vw,1.5rem);
+  grid-template-columns:repeat(auto-fit,minmax(272px,1fr))}
+@media(min-width:940px){
+  .doors::before{content:''; position:absolute; left:6%; right:6%; top:-2px;
+    height:1px; background:linear-gradient(90deg,transparent,var(--line) 12%,var(--line) 88%,transparent)}
+}
+.door{position:relative; display:flex; flex-direction:column;
+  background:var(--paper); color:var(--ink); border-radius:3px;
+  padding:clamp(1.6rem,3vw,2rem) clamp(1.3rem,2.6vw,1.7rem) clamp(1.3rem,2.6vw,1.6rem);
+  text-decoration:none; border-top:2px solid var(--gold);
+  box-shadow:0 1px 0 rgba(255,255,255,.16) inset, 0 18px 42px -22px rgba(0,0,0,.7);
+  transition:transform .34s cubic-bezier(.32,.72,.3,1), box-shadow .34s ease}
+.door::before{content:''; position:absolute; top:-6px; left:50%; width:9px; height:9px;
+  margin-left:-4.5px; border-radius:50%; background:var(--gold);
+  box-shadow:0 0 0 4px var(--forest)}
+.door:hover,.door:focus-visible{transform:translateY(-5px);
+  box-shadow:0 1px 0 rgba(255,255,255,.16) inset, 0 26px 52px -20px rgba(0,0,0,.78)}
+.door:focus-visible{outline:2px solid var(--gold); outline-offset:5px}
+.who{font-size:.63rem; letter-spacing:.24em; text-transform:uppercase;
+  color:var(--jade); font-weight:600; margin:0 0 .85rem}
+.door h2{font-family:var(--display); font-weight:600; font-size:clamp(1.45rem,3vw,1.72rem);
+  line-height:1.16; margin:0 0 .6rem; color:var(--pine); letter-spacing:.01em}
+.door p{margin:0 0 1.15rem; font-size:.9rem; line-height:1.65; color:var(--ink-soft)}
+.door ul{list-style:none; margin:0 0 1.5rem; padding:0 0 0 0; font-size:.79rem;
+  color:var(--ink-soft); line-height:1.5}
+.door li{padding:.42rem 0 .42rem .95rem; border-top:1px solid rgba(18,86,74,.13); position:relative}
+.door li::before{content:''; position:absolute; left:0; top:.92rem; width:4px; height:4px;
+  border-radius:50%; background:var(--jade); opacity:.6}
+.go{margin-top:auto; display:inline-flex; align-items:center; gap:.5rem;
+  font-size:.78rem; font-weight:600; letter-spacing:.13em; text-transform:uppercase; color:var(--pine)}
+.go svg{transition:transform .3s cubic-bezier(.32,.72,.3,1)}
+.door:hover .go svg,.door:focus-visible .go svg{transform:translateX(5px)}
+
+/* ── ghi chú ── */
+.note{margin:clamp(2.4rem,5vw,3.4rem) auto 0; max-width:60ch; text-align:center;
+  font-size:.79rem; line-height:1.75; color:rgba(238,245,240,.5); font-weight:300}
+.note strong{color:var(--gold); font-weight:500}
+.hint{display:inline-flex; flex-wrap:wrap; justify-content:center; gap:.4rem .95rem;
+  margin:1.1rem 0 0; padding:0; list-style:none; font-size:.72rem; letter-spacing:.04em}
+.hint li{color:rgba(238,245,240,.44)}
+.hint li::before{content:'· '; color:var(--gold)}
+footer{margin-top:clamp(2.6rem,5vw,3.6rem); text-align:center; font-size:.7rem;
+  letter-spacing:.16em; text-transform:uppercase; color:rgba(238,245,240,.32)}
+
+@media(prefers-reduced-motion:reduce){
+  .mark path{stroke-dashoffset:0; animation:none}
+  .mark circle{opacity:1; animation:none}
+  .door,.go svg{transition:none}
+  .door:hover,.door:focus-visible{transform:none}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <svg class="mark" viewBox="-70 -70 140 140" role="img" aria-label="Biểu tượng hoa sen năm cánh ANWELL">
+    <path d="M0 4 C-15 -20 -10 -44 0 -58 C10 -44 15 -20 0 4 Z"/>
+    <path d="M0 4 C-15 -20 -10 -44 0 -58 C10 -44 15 -20 0 4 Z" transform="rotate(72)"/>
+    <path d="M0 4 C-15 -20 -10 -44 0 -58 C10 -44 15 -20 0 4 Z" transform="rotate(144)"/>
+    <path d="M0 4 C-15 -20 -10 -44 0 -58 C10 -44 15 -20 0 4 Z" transform="rotate(216)"/>
+    <path d="M0 4 C-15 -20 -10 -44 0 -58 C10 -44 15 -20 0 4 Z" transform="rotate(288)"/>
+    <circle cx="0" cy="0" r="4.5"/>
+  </svg>
+  <p class="kicker">Bản mẫu MVP</p>
+  <h1>ANWELL <em>by</em> BYT</h1>
+  <p class="tagline">Feel well. Live an.</p>
+  <p class="intro">Ba giao diện của cùng một hệ thống chăm sóc sức khoẻ: nơi khách đặt lịch, nơi đối tác nộp hồ sơ, và nơi vận hành điều phối. Chọn một cửa để xem thử.</p>
+</header>
+
+<main class="doors">
+
+  <a class="door" href="ANWELL_MVP_KhachHang.html">
+    <p class="who">Người dùng cuối</p>
+    <h2>Ứng dụng cho người dùng</h2>
+    <p>Đặt lịch trị liệu, theo dõi đường hồi phục theo thời gian, và giữ hồ sơ sức khoẻ của riêng mình.</p>
+    <ul>
+      <li>Hành trình — đường hồi phục và chỉ số theo tuần</li>
+      <li>Đặt lịch — chọn cơ sở, kỹ thuật viên, khung giờ</li>
+      <li>Lịch hẹn — sắp tới và đã hoàn thành</li>
+      <li>Khám phá — gợi ý theo tình trạng cơ thể</li>
+      <li>Tôi — hồ sơ, điểm thưởng, hạng thành viên</li>
+    </ul>
+    <span class="go">Mở ứng dụng
+      <svg width="16" height="9" viewBox="0 0 16 9" fill="none" aria-hidden="true">
+        <path d="M0 4.5h14M10 1l4 3.5-4 3.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg></span>
+  </a>
+
+  <a class="door" href="ANWELL_CongDoiTac.html">
+    <p class="who">Đối tác mới</p>
+    <h2>Cổng thông tin &amp; đăng ký</h2>
+    <p>Trang công khai giới thiệu nền tảng và nhận hồ sơ tham gia, phân luồng theo từng loại đối tác.</p>
+    <ul>
+      <li>Trung tâm — spa, cơ sở dưỡng sinh, phòng trị liệu</li>
+      <li>Kỹ thuật viên tự do — hành nghề độc lập</li>
+      <li>Đối tác Kinh doanh — phát triển mạng lưới cơ sở</li>
+      <li>Cơ sở Đào tạo — cấp chứng chỉ chuyên môn</li>
+      <li>Biểu mẫu nộp hồ sơ và điều kiện tham gia</li>
+    </ul>
+    <span class="go">Mở cổng đăng ký
+      <svg width="16" height="9" viewBox="0 0 16 9" fill="none" aria-hidden="true">
+        <path d="M0 4.5h14M10 1l4 3.5-4 3.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg></span>
+  </a>
+
+  <a class="door" href="ANWELL_Portal_QuanTri.html">
+    <p class="who">Vận hành nội bộ</p>
+    <h2>Công cụ Quản trị</h2>
+    <p>Một cổng, năm vai trò. Mỗi vai trò thấy đúng phần việc của mình, chuyển vai trò ngay trong bản mẫu.</p>
+    <ul>
+      <li>ADMIN tổng — quản trị toàn bộ nền tảng</li>
+      <li>Trung tâm — lịch, kỹ thuật viên, doanh thu</li>
+      <li>KTV tự do — lịch cá nhân và thu nhập</li>
+      <li>Đối tác Kinh doanh — mạng lưới và hoa hồng</li>
+      <li>Cơ sở Đào tạo — học viên và chứng chỉ</li>
+    </ul>
+    <span class="go">Mở công cụ quản trị
+      <svg width="16" height="9" viewBox="0 0 16 9" fill="none" aria-hidden="true">
+        <path d="M0 4.5h14M10 1l4 3.5-4 3.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg></span>
+  </a>
+
+</main>
+
+<p class="note">
+  Đây là <strong>bản mẫu giao diện</strong> — toàn bộ số liệu hiển thị là dữ liệu mô phỏng, chưa kết nối máy chủ hay cơ sở dữ liệu thật.
+  Cả ba bản mẫu đều có sẵn thanh chuyển kích thước màn hình và chuyển giao diện ở phía trên.
+</p>
+<ul class="hint">
+  <li>Siêu rộng</li><li>Laptop</li><li>Tablet</li><li>Điện thoại</li><li>Phone nhỏ</li><li>Giao diện Thanh &amp; Onsen</li>
+</ul>
+
+<footer>ANWELL by BYT · Bản mẫu nội bộ</footer>
+
+</div>
+</body>
+</html>
